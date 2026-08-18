@@ -5,7 +5,7 @@ import {
   useSpring,
   useReducedMotion,
 } from "framer-motion";
-import { Download, Mail } from "lucide-react";
+import { Download, Eye, Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon, FacebookIcon, InstagramIcon } from "./icons/SocialIcons";
 
 const container = {
@@ -290,6 +290,28 @@ export default function Hero() {
               Download CV <Download size={16} />
             </motion.a>
           </motion.div>
+
+          {/* Preview link — opens the PDF in a new tab without forcing a download */}
+          <motion.a
+            variants={item(reduce)}
+            href="/resume.pdf"
+            target="_blank"
+            rel="noreferrer"
+            whileHover={reduce ? {} : { color: "var(--accent)" }}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.4rem",
+              marginTop: "-1.5rem",
+              marginBottom: "2.5rem",
+              fontSize: "0.8rem",
+              fontWeight: 400,
+              color: "var(--text-muted)",
+              letterSpacing: "0.02em",
+            }}
+          >
+            <Eye size={14} /> Preview resume before downloading
+          </motion.a>
 
           {/* Avatar cluster + quick stat */}
           <motion.div
