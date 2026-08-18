@@ -5,7 +5,7 @@ import {
   useSpring,
   useReducedMotion,
 } from "framer-motion";
-import { Download, Eye, Mail } from "lucide-react";
+import { Eye, Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon, FacebookIcon, InstagramIcon } from "./icons/SocialIcons";
 
 const container = {
@@ -73,8 +73,6 @@ const bottomStats = [
   { value: "4", label: "Live in production" },
 ];
 
-const avatarInitials = ["CQ", "IT", "MS"];
-
 const heroSans = "'Helvetica Neue', 'Segoe UI', Arial, sans-serif";
 
 export default function Hero() {
@@ -90,7 +88,7 @@ export default function Hero() {
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-start",
-        padding: "16vh 5vw 0",
+        padding: "clamp(9rem, 16dvh, 10.5rem) 5vw 0",
         position: "relative",
         overflow: "hidden",
       }}
@@ -199,16 +197,23 @@ export default function Hero() {
           initial="hidden"
           animate="show"
           className="hero-text"
-          style={{ flex: "1 1 0", minWidth: 0, maxWidth: "600px", paddingTop: "1rem" }}
+          style={{
+            flex: "1 1 0",
+            minWidth: 0,
+            maxWidth: "600px",
+            paddingTop: "1rem",
+            position: "relative",
+            zIndex: 2,
+          }}
         >
           {/* Greeting label */}
           <motion.p
             variants={item(reduce)}
             style={{
-              fontSize: "0.95rem",
+              fontSize: "1.1rem",
               fontWeight: 400,
               color: "var(--text-muted)",
-              marginBottom: "1.25rem",
+              marginBottom: "0.9rem",
             }}
           >
             This is Andrei Ariar
@@ -219,25 +224,25 @@ export default function Hero() {
             style={{
               fontFamily: heroSans,
               fontWeight: 800,
-              fontSize: "clamp(2.6rem, 6vw, 4.2rem)",
+              fontSize: "clamp(3rem, 7.2vmin, 5.2rem)",
               lineHeight: 1.02,
               letterSpacing: "-0.03em",
               color: "var(--text)",
-              marginBottom: "1.25rem",
+              marginBottom: "1rem",
             }}
           >
             Web Developer &
             <br />
-            <span style={{ color: "var(--accent)" }}>AI-Integrated Apps.</span>
+            <span style={{ color: "var(--accent)" }}>Digital Product Builder.</span>
           </motion.h1>
 
           <motion.p
             variants={item(reduce)}
             style={{
-              fontSize: "1rem",
+              fontSize: "1.15rem",
               fontWeight: 300,
               color: "var(--text-muted)",
-              marginBottom: "2.25rem",
+              marginBottom: "1.5rem",
             }}
           >
             With 3+ years of experience turning ideas into products.
@@ -246,7 +251,7 @@ export default function Hero() {
           <motion.div
             variants={item(reduce)}
             className="hero-cta-row"
-            style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "2.5rem" }}
+            style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginTop: "0.5rem", marginBottom: "1.75rem" }}
           >
             <MagneticButton
               href="#contact"
@@ -263,12 +268,15 @@ export default function Hero() {
                 letterSpacing: "0.03em",
               }}
             >
-              Say Hello
+              Get in Touch
             </MagneticButton>
 
+            {/* View CV — opens the résumé in a new tab, no forced download
+                (avoids the browser's download shelf covering the UI) */}
             <motion.a
               href="/resume.pdf"
-              download="Andrei-Ariar-Resume.pdf"
+              target="_blank"
+              rel="noreferrer"
               whileHover={reduce ? {} : { borderColor: "var(--accent)", color: "var(--accent)" }}
               whileTap={{ scale: 0.96 }}
               style={{
@@ -285,89 +293,8 @@ export default function Hero() {
                 letterSpacing: "0.03em",
               }}
             >
-              Download CV <Download size={16} />
+              View CV <Eye size={16} />
             </motion.a>
-          </motion.div>
-
-          {/* Preview link — opens the PDF in a new tab without forcing a download */}
-          <motion.a
-            variants={item(reduce)}
-            href="/resume.pdf"
-            target="_blank"
-            rel="noreferrer"
-            whileHover={reduce ? {} : { color: "var(--accent)" }}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0.4rem",
-              marginTop: "-1.5rem",
-              marginBottom: "2.5rem",
-              fontSize: "0.8rem",
-              fontWeight: 400,
-              color: "var(--text-muted)",
-              letterSpacing: "0.02em",
-            }}
-          >
-            <Eye size={14} /> Preview resume before downloading
-          </motion.a>
-
-          {/* Avatar cluster + quick stat */}
-          <motion.div
-            variants={item(reduce)}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "1rem",
-              padding: "0.6rem 1.25rem 0.6rem 0.6rem",
-              border: "1px solid var(--text-faint)",
-              borderRadius: "999px",
-            }}
-          >
-            <div style={{ display: "flex" }}>
-              {avatarInitials.map((initials, i) => (
-                <div
-                  key={initials}
-                  style={{
-                    width: "34px",
-                    height: "34px",
-                    borderRadius: "50%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "0.65rem",
-                    fontWeight: 600,
-                    color: "var(--bg)",
-                    background: "var(--accent)",
-                    border: "2px solid var(--bg)",
-                    marginLeft: i === 0 ? 0 : "-10px",
-                  }}
-                >
-                  {initials}
-                </div>
-              ))}
-            </div>
-            <div>
-              <div
-                style={{
-                  fontFamily: heroSans,
-                  fontWeight: 700,
-                  fontSize: "1.1rem",
-                  lineHeight: 1,
-                  color: "var(--text)",
-                }}
-              >
-                5+
-              </div>
-              <div
-                style={{
-                  fontSize: "0.7rem",
-                  color: "var(--text-muted)",
-                  letterSpacing: "0.03em",
-                }}
-              >
-                Recent projects
-              </div>
-            </div>
           </motion.div>
         </motion.div>
 
@@ -379,7 +306,8 @@ export default function Hero() {
           className="hero-photo-wrap"
           style={{
             position: "relative",
-            right: "-5vw",
+            right: "0.5vw",
+            top: "2.25rem",
             flexShrink: 0,
             zIndex: 1,
           }}
@@ -391,8 +319,9 @@ export default function Hero() {
             className="hero-photo"
             style={{
               position: "relative",
-              width: "clamp(300px, 32vw, 480px)",
-              height: "clamp(440px, 66vh, 660px)",
+              width: "clamp(260px, 28vw, 440px)",
+              aspectRatio: "3 / 4",
+              maxHeight: "52dvh",
               borderRadius: "24px 0 0 0",
               overflow: "hidden",
             }}
@@ -404,7 +333,7 @@ export default function Hero() {
                 width: "100%",
                 height: "100%",
                 objectFit: "cover",
-                objectPosition: "center top",
+                objectPosition: "center 20%",
                 display: "block",
               }}
             />
@@ -443,7 +372,7 @@ export default function Hero() {
           zIndex: 2,
           width: "100%",
           maxWidth: "1100px",
-          margin: "-6rem auto 3rem",
+          margin: "1rem auto 2rem",
           background: "rgba(255,255,255,0.05)",
           border: "1px solid rgba(255,255,255,0.12)",
           borderRadius: "20px",
@@ -459,7 +388,7 @@ export default function Hero() {
             key={label}
             style={{
               textAlign: "center",
-              padding: "1.75rem 1rem",
+              padding: "1.35rem 1rem",
               borderLeft: i === 0 ? "none" : "1px solid rgba(255,255,255,0.12)",
             }}
           >

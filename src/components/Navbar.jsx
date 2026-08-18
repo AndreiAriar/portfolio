@@ -63,7 +63,7 @@ export default function Navbar() {
             alt=""
             aria-hidden="true"
             style={{
-              height: "46px",
+              height: "44px",
               width: "auto",
               display: "block",
               filter: "brightness(0) invert(1)",
