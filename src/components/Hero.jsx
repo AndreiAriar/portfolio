@@ -269,8 +269,6 @@ export default function Hero() {
             <motion.a
               href="/resume.pdf"
               download="Andrei-Ariar-Resume.pdf"
-              target="_blank"
-              rel="noreferrer"
               whileHover={reduce ? {} : { borderColor: "var(--accent)", color: "var(--accent)" }}
               whileTap={{ scale: 0.96 }}
               style={{
@@ -445,7 +443,7 @@ export default function Hero() {
           zIndex: 2,
           width: "100%",
           maxWidth: "1100px",
-          margin: "-4.5rem auto 3rem",
+          margin: "-6rem auto 3rem",
           background: "rgba(255,255,255,0.05)",
           border: "1px solid rgba(255,255,255,0.12)",
           borderRadius: "20px",
