@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { GithubIcon, Linkedin, Mail } from "lucide-react";
+import { Mail, MessageCircle, Send } from "lucide-react";
+import { FacebookIcon, InstagramIcon } from "./icons/SocialIcons";
 
 export default function Contact() {
   const ref = useRef(null);
@@ -8,13 +9,16 @@ export default function Contact() {
 
   const socials = [
     { icon: Mail, label: "Email", href: "francesandrei.ariar@gmail.com", text: "francesandrei.ariar@gmail.com" },
-    { icon: GithubIcon, label: "GitHub", href: "https://github.com", text: "https://github.com/AndreiAriar" },
-    { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com", text: "https://www.linkedin.com/in/andrei-ariar-7561163a0/" },
+    { icon: FacebookIcon, label: "Facebook", href: "https://www.facebook.com/andrei.ariar.2024", text: "facebook.com/andrei.ariar.2024" },
+    { icon: InstagramIcon, label: "Instagram", href: "https://www.instagram.com/ashersnclr/", text: "@ashersnclr" },
+    { icon: Send, label: "Telegram", href: "https://t.me/asher_sinclair", text: "@asher_sinclair" },
+    { icon: MessageCircle, label: "WhatsApp", href: "https://wa.me/639760237404", text: "0976 023 7404" },
   ];
 
   return (
     <section
       id="contact"
+      className="contact-section"
       style={{
         padding: "8rem 5vw 6rem",
         background: "var(--ink)",
@@ -102,6 +106,7 @@ export default function Contact() {
               href={href}
               target="_blank"
               rel="noreferrer"
+              className="contact-row"
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -110,7 +115,7 @@ export default function Contact() {
                 borderBottom: "1px solid rgba(255,255,255,0.1)",
                 color: "rgba(247,245,240,0.6)",
                 transition: "color var(--transition)",
-                group: true,
+                gap: "1rem",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.color = "#F7F5F0";
@@ -132,7 +137,7 @@ export default function Contact() {
                   {label}
                 </span>
               </div>
-              <span style={{ fontSize: "0.95rem", fontWeight: 300 }}>{text}</span>
+              <span className="contact-row-text" style={{ fontSize: "0.95rem", fontWeight: 300 }}>{text}</span>
             </a>
           ))}
         </motion.div>

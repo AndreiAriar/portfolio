@@ -1,36 +1,78 @@
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { ArrowUpRight, GithubIcon } from "lucide-react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+import { GithubIcon } from "./icons/SocialIcons";
 import { projects } from "../data/projects";
+
+const cardImage = {
+  rest: { scale: 1 },
+  hover: { scale: 1.06 },
+};
 
 function ProjectCard({ project, index }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const reduce = useReducedMotion();
 
   return (
     <motion.div
       ref={ref}
-      initial={{ y: 40, opacity: 0 }}
+      initial="rest"
+      whileHover="hover"
       animate={inView ? { y: 0, opacity: 1 } : {}}
-      transition={{ duration: 0.7, delay: index * 0.12, ease: [0.4, 0, 0.2, 1] }}
+      className="project-card"
       style={{
+        opacity: inView ? 1 : 0,
+        transform: inView || reduce ? "none" : "translateY(40px)",
+        transition: `opacity 0.7s ${index * 0.12}s ease, transform 0.7s ${index * 0.12}s cubic-bezier(0.16,1,0.3,1)`,
         padding: "2.5rem 0",
-        borderTop: "1px solid var(--ink-faint)",
+        borderTop: "1px solid var(--text-faint)",
         display: "grid",
-        gridTemplateColumns: "1fr 2fr auto",
+        gridTemplateColumns: "220px 1fr 2fr auto",
         gap: "2rem",
         alignItems: "start",
         cursor: "default",
       }}
     >
+      {/* Thumbnail */}
+      <a
+        href={project.link}
+        target="_blank"
+        rel="noreferrer"
+        className="project-thumb"
+        style={{
+          display: "block",
+          width: "220px",
+          height: "160px",
+          borderRadius: "var(--radius)",
+          overflow: "hidden",
+          background: "var(--accent-soft)",
+          flexShrink: 0,
+          cursor: "pointer",
+        }}
+      >
+        <motion.img
+          src={project.image}
+          alt={project.title}
+          variants={reduce ? {} : cardImage}
+          transition={{ type: "spring", stiffness: 220, damping: 22 }}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            display: "block",
+          }}
+        />
+      </a>
+
       {/* Left — year + category */}
-      <div>
+      <div className="project-meta">
         <p
           style={{
             fontSize: "0.75rem",
             letterSpacing: "0.08em",
             textTransform: "uppercase",
-            color: "var(--ink-faint)",
+            color: "var(--text-faint)",
             marginBottom: "0.4rem",
           }}
         >
@@ -48,13 +90,13 @@ function ProjectCard({ project, index }) {
       </div>
 
       {/* Center — title + description + tech */}
-      <div>
+      <div className="project-body">
         <h3
           style={{
             fontFamily: "var(--serif)",
             fontSize: "2rem",
             lineHeight: 1.1,
-            color: "var(--ink)",
+            color: "var(--text)",
             marginBottom: "0.75rem",
             letterSpacing: "-0.02em",
           }}
@@ -64,7 +106,7 @@ function ProjectCard({ project, index }) {
         <p
           style={{
             fontSize: "0.95rem",
-            color: "var(--ink-muted)",
+            color: "var(--text-muted)",
             lineHeight: 1.7,
             maxWidth: "440px",
             marginBottom: "1.25rem",
@@ -78,9 +120,9 @@ function ProjectCard({ project, index }) {
               key={t}
               style={{
                 padding: "0.25rem 0.75rem",
-                background: "var(--accent-light)",
+                background: "var(--accent-soft)",
                 color: "var(--accent)",
-                borderRadius: "2px",
+                borderRadius: "var(--radius)",
                 fontSize: "0.75rem",
                 fontWeight: 500,
                 letterSpacing: "0.04em",
@@ -93,43 +135,48 @@ function ProjectCard({ project, index }) {
       </div>
 
       {/* Right — links */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", paddingTop: "0.25rem" }}>
-        <a
+      <div
+        className="project-links"
+        style={{ display: "flex", flexDirection: "column", gap: "0.75rem", paddingTop: "0.25rem" }}
+      >
+        <motion.a
           href={project.link}
+          target="_blank"
+          rel="noreferrer"
+          whileHover={{ color: "var(--accent)", x: 2 }}
+          whileTap={{ scale: 0.95 }}
           style={{
             display: "flex",
             alignItems: "center",
             gap: "0.35rem",
             fontSize: "0.8rem",
             fontWeight: 500,
-            color: "var(--ink)",
+            color: "var(--text)",
             letterSpacing: "0.04em",
             textTransform: "uppercase",
-            transition: "color var(--transition)",
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
-          onMouseLeave={(e) => (e.currentTarget.style.color = "var(--ink)")}
         >
           Live <ArrowUpRight size={13} />
-        </a>
-        <a
+        </motion.a>
+        <motion.a
           href={project.repo}
+          target="_blank"
+          rel="noreferrer"
+          whileHover={{ color: "var(--text)", x: 2 }}
+          whileTap={{ scale: 0.95 }}
           style={{
             display: "flex",
             alignItems: "center",
             gap: "0.35rem",
             fontSize: "0.8rem",
             fontWeight: 400,
-            color: "var(--ink-muted)",
+            color: "var(--text-muted)",
             letterSpacing: "0.04em",
             textTransform: "uppercase",
-            transition: "color var(--transition)",
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = "var(--ink)")}
-          onMouseLeave={(e) => (e.currentTarget.style.color = "var(--ink-muted)")}
         >
           Code <GithubIcon size={13} />
-        </a>
+        </motion.a>
       </div>
     </motion.div>
   );
@@ -142,6 +189,7 @@ export default function Projects() {
   return (
     <section
       id="projects"
+      className="projects-section"
       style={{
         padding: "8rem 5vw",
         maxWidth: "1100px",
@@ -152,7 +200,7 @@ export default function Projects() {
         ref={ref}
         initial={{ y: 20, opacity: 0 }}
         animate={inView ? { y: 0, opacity: 1 } : {}}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         style={{ marginBottom: "1rem" }}
       >
         <p
@@ -172,7 +220,7 @@ export default function Projects() {
             fontSize: "clamp(2rem, 5vw, 3.5rem)",
             lineHeight: 1.1,
             letterSpacing: "-0.02em",
-            color: "var(--ink)",
+            color: "var(--text)",
           }}
         >
           Things I've built
@@ -183,8 +231,7 @@ export default function Projects() {
         {projects.map((project, i) => (
           <ProjectCard key={project.id} project={project} index={i} />
         ))}
-        {/* closing border */}
-        <div style={{ borderTop: "1px solid var(--ink-faint)" }} />
+        <div style={{ borderTop: "1px solid var(--text-faint)" }} />
       </div>
     </section>
   );

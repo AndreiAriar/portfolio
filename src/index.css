@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;700&display=swap');
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -7,12 +7,13 @@
 }
 
 :root {
-  --cream: #F7F5F0;
-  --ink: #1A1814;
-  --ink-muted: #6B6760;
-  --ink-faint: #C2BFB8;
-  --accent: #C8602A;
-  --accent-light: #F0E8E0;
+  --bg: #0B0B0A;
+  --surface: #141412;
+  --text: #F5F3EE;
+  --text-muted: #A6A29A;
+  --text-faint: #3E3B35;
+  --accent: #3FC98A;
+  --accent-soft: rgba(63, 201, 138, 0.14);
   --white: #FFFFFF;
   --serif: 'DM Serif Display', Georgia, serif;
   --sans: 'DM Sans', system-ui, sans-serif;
@@ -26,8 +27,8 @@ html {
 
 body {
   font-family: var(--sans);
-  background: var(--cream);
-  color: var(--ink);
+  background: var(--bg);
+  color: var(--text);
   font-size: 16px;
   line-height: 1.7;
   font-weight: 300;
@@ -46,10 +47,104 @@ img {
 
 ::selection {
   background: var(--accent);
-  color: var(--white);
+  color: var(--bg);
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--cream); }
-::-webkit-scrollbar-thumb { background: var(--ink-faint); border-radius: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--text-faint); border-radius: 3px; }
+
+/* ==========================================================
+   Responsive breakpoints
+   Tablet: <= 900px | Mobile: <= 640px | Small phones: <= 380px
+   Rules use !important to override the inline styles set in JSX.
+   ========================================================== */
+
+/* ---------- Tablet & below (<=900px) ---------- */
+@media (max-width: 900px) {
+  /* Navbar */
+  .navbar { padding: 0.6rem 0.6rem 0.6rem 1.25rem !important; }
+  .navbar-links { gap: 1.25rem !important; }
+
+  /* Hero: stack text above photo, photo becomes a normal in-flow block */
+  .hero-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 3rem !important;
+  }
+  .hero-text { max-width: 100% !important; }
+  .hero-photo-wrap {
+    position: relative !important;
+    right: auto !important;
+    bottom: auto !important;
+    top: auto !important;
+    align-self: center !important;
+    margin: 0 auto !important;
+  }
+  .hero-photo {
+    width: min(90vw, 420px) !important;
+    height: 60vh !important;
+    max-height: 480px !important;
+    border-radius: 24px !important;
+    margin: 0 auto !important;
+  }
+  .hero-section { padding: 12vh 6vw 3vh !important; }
+
+  .hero-bg-word { display: none !important; }
+  .hero-social-rail {
+    position: static !important;
+    transform: none !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    margin-top: 1.5rem !important;
+  }
+  .hero-stats-bar { grid-template-columns: repeat(2, 1fr) !important; }
+  .hero-stats-bar > div:nth-child(3) { border-left: none !important; }
+
+  /* Projects: collapse the 4-column grid */
+  .project-card {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+    padding: 2rem 0 !important;
+  }
+  .project-thumb { width: 100% !important; height: 220px !important; }
+  .project-meta { display: flex !important; gap: 1rem !important; }
+  .project-links { flex-direction: row !important; gap: 1.5rem !important; }
+
+  /* About: stack bio above skills list */
+  .about-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem !important;
+  }
+}
+
+/* ---------- Mobile (<=640px) ---------- */
+@media (max-width: 640px) {
+  .navbar { padding: 0.5rem 0.5rem 0.5rem 1rem !important; grid-template-columns: auto auto !important; }
+  .navbar-brand { font-size: 1.05rem !important; }
+  .navbar-links { display: none !important; }
+  .navbar-cta { padding: 0.55rem 1.1rem !important; font-size: 0.75rem !important; }
+
+  .hero-cta-row { flex-direction: column !important; align-items: stretch !important; }
+  .hero-cta-row > a { justify-content: center !important; width: 100% !important; }
+  .hero-photo { width: min(92vw, 340px) !important; height: 52vh !important; }
+  .hero-stats-bar { grid-template-columns: 1fr !important; }
+  .hero-stats-bar > div { border-left: none !important; border-top: 1px solid var(--text-faint); }
+  .hero-stats-bar > div:first-child { border-top: none; }
+
+  .projects-section { padding: 6rem 6vw !important; }
+
+  .about-section { padding: 6rem 6vw !important; }
+  .about-skill-note { display: none !important; }
+
+  .contact-section { padding: 6rem 6vw 4rem !important; }
+  .contact-row { flex-wrap: wrap !important; row-gap: 0.5rem !important; }
+  .contact-row-text { font-size: 0.8rem !important; word-break: break-word !important; }
+}
+
+/* ---------- Small phones (<=380px) ---------- */
+@media (max-width: 380px) {
+  .navbar-links { gap: 0.75rem !important; }
+  .hero-photo { height: 46vh !important; }
+}
